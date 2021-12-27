@@ -98,7 +98,6 @@
 - 압축 전송
 
   - Content-Encoding
-  - 
 
 - 분할 전송
 
@@ -196,4 +195,6 @@
 - WWW-Authenticate 
   - 리소스 접근 시 필요한 인증 방법을 정의한다.
   - 401(Unauthorized) 응답과 함께 사용한다.
+
+
 
