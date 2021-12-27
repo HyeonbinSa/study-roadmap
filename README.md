@@ -30,4 +30,7 @@
 
 ### 1. Data Structure
 
-### 2. [Codingtest](https://github.com/HyeonbinSa/study-algorithm)
+### 2. [Algorithm](https://github.com/HyeonbinSa/study-roadmap/tree/master/Algorithm)
+
+### 3. [Codingtest](https://github.com/HyeonbinSa/study-algorithm)
+
