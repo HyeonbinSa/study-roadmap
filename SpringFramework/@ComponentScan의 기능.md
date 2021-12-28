@@ -49,25 +49,56 @@
 ### @ComponentScan의 대상
 
 - 컴포넌트 스캔은 <u>아래의 Annotation</u>에 대해 스캔을 하여 Spring Bean을 생성한다.
-
   - 각각의 클래스의 소스코드를 보면 `@Component`을 포함하고 있는 것을 확인할 수 있다.
-
   - `@Component` : 컴포넌트 스캔에서 사용된다.
-
   - `@Controller` : Spring MVC Controller에서 사용된다.
-
   - `@Service` : Spring Business Logic에서 사용된다.
-
   - `@Repository` : Spring 데이터 접근 계층에서 사용된다.
-
   - `@Configuration` : Spring 설정 정보에서 사용된다.
 
-    
+### @ComponentScan의 필터
 
-### @Autowired의 특징
+- `includeFilters` : ComponentScan 대상을 추가로 지정
+- `excludeFilters`  : ComponentScan에서 제외할 대상을 지정
+- 테스트 - `includeFilters` : BeanA, `excludeFiltlers` : BeanB
 
-- 생성자에 `@Autowired`를 지정하면, Container가 자동으로 Spring Bean을 찾아 주입해준다.
+```java
+public class ComponentFilterAppConfigTest {
 
-- 기본적인 전략은 Type이 같은 Bean을 찾아서 주입한다.
+    @Test
+    void filterScan() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(ComponentFilterAppConfig.class);
+				BeanA beanA = ac.getBean("beanA", BeanA.class);
+      	BeanA beanB = ac.getBean("beanB", BeanB.class);
+        ...
+        );
+    }
 
-  > getBean(MemberRepository.class) 와 동일
+    @Configuration
+    @ComponentScan(
+            includeFilters = @Filter(type = FilterType.ANNOTATION, classes = MyIncludeComponent.class),
+            excludeFilters = @Filter(type = FilterType.ANNOTATION, classes = MyExcludeComponent.class)
+    )
+    static class ComponentFilterAppConfig {
+
+    }
+}
+```
+
+- 임의로 만든 `@MyIncludeComponent`,  `@MyExcludeComponent` Annotation
+
+```java
+@MyIncludeComponent
+public class BeanA {
+}
+
+@MyExcludeComponent
+public class BeanB {
+}
+```
+
+- 테스트 결과
+
+>[main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'beanA' // BeanA는 정상적으로 생성
+>
+>org.springframework.beans.factory.NoSuchBeanDefinitionException: No Bean named 'beanB' ... // BeanB는 Bean 생성이 되지 않아 에러가 발생함.
