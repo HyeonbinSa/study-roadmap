@@ -5,7 +5,40 @@
 ### 1. GET - Query Parameter
 
 - Message Body가 없으며 URL의 Query Parameter를 통해 데이터를 전달
+
+  > http://localhost:8080/request-param?username=hello&age=20과 같은 형식으로 사용
+
 - 주로 검색, 필터, 페이징 등에서 사용한다.
+
+- `사용방법`
+
+  1. 전체 파라미터 조회
+
+     - `getParameterNames()` 함수를 통해서 Queryr Parameter로 넘어온 값의 Parameter Name들을 Enumeration 형태로 반환
+
+     ```java
+     // HttpServletRequest request
+     Enumeration<String> parameterNames = request.getParameterNames();
+     ```
+
+  2. 단일 파라미터 조회
+
+     - `getParameter(String name)`함수에 원하는 Parameter Name의 값을 넣어 값을 반환
+
+     ```java
+     String username = request.getParameter("username");
+     ```
+
+  3. 복수 파라미터 조회
+
+     - `getParameterValues()` 함수를 통해 Parameter Name은 하나인데 값이 중복될 경우 사용 
+     - 특이사항 : 복수의 파라미터를 가지고 있을 때 `getParameter(name)`을 사용하게 되면 가장 첫번째 파라미터만을 반환
+
+     ```java
+     String[] usernames = request.getParameterValues(username);
+     ```
+
+     
 
 ### 2. POST - HTML  Form
 
