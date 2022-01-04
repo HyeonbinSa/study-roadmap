@@ -42,9 +42,11 @@
 
 ### 2. POST - HTML  Form
 
-- HTTP Request Message > content-type:application/x-www-form-urlencoded
+- HTTP Request Message > `content-type:application/x-www-form-urlencoded`
+  - `content-type`은 <u>HTTP Meassage Body의  데이터 형식</u>을 지정
 - Message Body에 **Query Parameter**형식으로 데이터를 전달
-  - username=hello&age=20
+  - `username=hello&age=20` 형태로 Message Body에 저장되어 전달됨
+  - 즉, 1. GET - Query Parameter에서 사용한 **getParameter() 등의 함수를 그대로 사용**할 수 있다.
 - 주로 회원 가입, 상품 주문, HTML Form 등에서 사용한다.
 
 ### 3. HTTP Message Body 
