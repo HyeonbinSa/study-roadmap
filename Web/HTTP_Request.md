@@ -52,7 +52,22 @@
 ### 3. HTTP Message Body 
 
 - HTTP API에서 주로 사용하며 JSON, XML, TEXT 형식으로 데이터를 HTTP Message Body에 직접 담아서 요청
-- 주로 JSON을 많이 사용하며 POST, PUT, PATCH에서 사용한다.
+
+- 주로 <u>JSON</u>을 많이 사용하며 POST, PUT, PATCH에서 사용한다.
+
+- getInputStream()을 통해서 바이트 코드로 값을 받아오며 StreamUtils를 사용해 String 형태로 Messgae Body 받아옴
+
+  ```java
+  ServletInputStream inputStream = request.getInputStream();
+  String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+  ```
+
+- JSON으로 데이터 전송
+
+  - content-type:application/json
+  - message  body : `{"username":"hi","age":20}`과 같은 형식
+  - JSON 결과를 파싱해서 사용할 수 있는 Java 객체로 변환하기 위해 Jackson과 같은 JSON 변환 라이브러리를 사용해야한다.
+    - Spring Boot의 Spring MVC에서는 기본적으로 Jackson 라이브러리를 제공하여 ObjectMapper를 사용하여 변환할 수 있다.
 
 
 
