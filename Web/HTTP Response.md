@@ -44,6 +44,14 @@
       response.setCharacterEncoding("utf-8");
       ```
 
+    - Json 응답 : Content-Type을 `application/json`으로 지정
+
+      ```java
+      //Content-Type: application/json
+      response.setContentType("application/json");
+      response.setCharacterEncoding("utf-8");
+      ```
+
 - 편의 기능 제공
 
   - Content-Type
