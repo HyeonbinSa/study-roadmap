@@ -28,11 +28,21 @@
 
   - `Body` 생성
 
-    ```java
-    // [Message Body 생성]
-    PrintWriter printWriter = response.getWriter();
-    printWriter.println("Ok!");
-    ```
+    - 단순 텍스트 응답 
+
+      ```java
+      // [Message Body 생성]
+      PrintWriter printWriter = response.getWriter();
+      printWriter.println("Ok!");
+      ```
+
+    - HTML 응답 : Content-Type을 `text/html`로 지정
+
+      ```java
+      // Content-Type: text/html;charset=urf-8
+      response.setContentType("text/html");
+      response.setCharacterEncoding("utf-8");
+      ```
 
 - 편의 기능 제공
 
