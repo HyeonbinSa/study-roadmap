@@ -137,6 +137,19 @@
 
 - `Stream<T> peek(Consumer<T> action)` : Stream 요소에 작업 수행
 
+  - 최종 연산의 forEach와 동일한 기능을  수행하지만 Stream의  요소를 소비하지 않는다.(Stream<T> 반환)
+
+  - 중간 연산 작업 결과 확인  시에  사용
+
+    ```java
+    IntStream intStream = IntStream.rangeClosed(1, 10);
+    intStream.skip(3)
+              .peek(num -> System.out.print(num +" "))
+              .limit(5)
+              .forEach(System.out::print);
+    // 출력 : 4 45 56 67 78 8
+    ```
+
 - `Stream<T> sorted()` : Stream 요소 정렬 
 
   - 인자값이  없을  경우에는 기본 정렬
@@ -156,7 +169,42 @@
 
 - `Stream<T> map` : Stream 요소를 변환
 
+  - Stream<R>  map(Function<?  super T,  ? extends R> mapper) : 함수를 인자로 받아서 수행
+
+  - Stream<T>  -> Stream<R> ,  T Type을 넣어 R  Type으로 받을 수 있다.
+
+    ```java
+    File[] fileArray = {new File("Ex1.java"), new File("Ex1")
+                    , new File("Ex1.bak"), new File("Ex1.txt")};
+    Stream<File> fileStream = Stream.of(fileArray);
+    Stream<String> fileNameStream = fileStream.map(File::getName);
+    fileNameStream.forEach(fileName -> System.out.print("[" + fileName + "] "));
+    // 출력 : [Ex1.java] [Ex1] [Ex1.bak] [Ex1.txt] 
+    ```
+
 - `Stream<T> flatMap` : Stream 요소를 변환
+
+  - String[] 의 Stream을  map()으로 변환 : <u>Stream의 Stream</u>
+
+    ```java
+    // String[]의 Stream을 map()으로 변환했을 때
+    Stream<String[]> stringStream =
+                Stream.of(new String[]{"aaa", "bbb", "ccc"}
+                        , new String[]{"AAA", "BBB", "CCC"});
+    // Stream<Stream<String>> : Stream의 Stream으로 변환이 됨.
+    Stream<Stream<String>> stringStreamStream = stringStream.map(Arrays::stream);
+    stringStreamStream.forEach(str -> System.out.print(str + " "));
+    // 출력 : java.util.stream.ReferencePipeline$Head@1f17ae12 java.util.stream.ReferencePipeline$Head@4d405ef7
+    ```
+
+  - String[] 의 Stream을  flatMap()으로 변환 : <u>Stream</u>
+
+    ```java
+    // flatMap()으로 변환했을 때
+    Stream<String> stringStreamByFlatMap = stringStream2.flatMap(Arrays::stream);
+            stringStreamByFlatMap.forEach(str -> System.out.print(str + " "));
+    // 출력 : aaa bbb ccc AAA BBB CCC 
+    ```
 
 ---
 
