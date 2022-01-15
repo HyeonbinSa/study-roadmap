@@ -87,17 +87,76 @@
 ### 2.  Stream 중간 연산 
 
 - Stream 중간 연산은 n번 수행이 가능하며 연산 결과는 Stream이다.
+
   - 예) `stream.distinct().limit(5).sorted().forEach(System.out::println)`
   - `.distinct().limit(5).sorted()` : 중간 연산
-- Stream<T>  distinct()  : 중복 제거 
-- Stream<T> filter(Predicate<T> predicate) : 조건에 **안** 맞는 요소 제외
-- Stream<T> limit(long maxSize) : Stream 일부를 잘라냄.
-- Stream<T> skip(long n) : Steram 일부 건너 띔.
-- Stream<T> peek(Consumer<T> action) : Stream 요소에 작업 수행
-- Stream<T> sorted() : Stream 요소 정렬 
-  - Stream<T> sorted(Comparator<T> comparator) : 특정 정렬 기준에 따라 정렬
-- Stream<T> map : Stream 요소를 변환
-- Stream<T> flatMap : Stream 요소를 변환
+
+- `Stream<T>  distinct()`  : 중복 제거 
+
+  - Stream 요소의 중복된 값을 제거하는 작업을 수행
+
+    ```java
+    IntStream intStream = IntStream.of(1, 1, 1, 2, 2, 2, 3, 4, 3, 2, 5, 6);
+    intStream.distinct().forEach(System.out::print);
+    // 출력 : 123456
+    ```
+
+- `Stream<T> filter(Predicate<T> predicate)` : 조건에 **안** 맞는 요소 제외
+
+  - 인자로 전달받은 조건에 부합하지 않는 값은 제거하는 작업을 수행
+
+    ```java
+    IntStream intStream = IntStream.rangeClosed(1, 10);
+    intStream.filter(n -> n % 2 == 0).forEach(System.out::print); // 짝수만 filter
+    // 출력 : 246810  (홀수가 제거된 결과값)
+    ```
+
+- `Stream<T> limit(long maxSize)` : Stream 일부를 잘라냄.
+
+  - maxSize 이후의 요소를 잘라내는 작업을 수행 
+
+    ```java
+    IntStream intStream = IntStream.rangeClosed(1,10);
+    intStream.limit(7).forEach(System.out::print);
+    // 출력 : 1234567 
+    ```
+
+- `Stream<T> skip(long n)` : Steram 일부 건너 띔.
+
+  - Stream의 앞에서부터 n개를 건너띄는 작업을 수행
+
+    ```java
+    IntStream intStream = IntStream.rangeClosed(1,10);
+    intStream.skip(5).forEach(System.out::print);
+    // 출력 : 678910
+    // limit과 skip을 함께 사용할 경우 
+    IntStream intStream = IntStream.rangeClosed(1,10);
+    intStream.skip(3).limit(5).forEach(System.out::print);
+    // 출력 : 45678
+    ```
+
+- `Stream<T> peek(Consumer<T> action)` : Stream 요소에 작업 수행
+
+- `Stream<T> sorted()` : Stream 요소 정렬 
+
+  - 인자값이  없을  경우에는 기본 정렬
+
+    ```java
+    Stream<String> strStream = Stream.of("Z", "apple", "Google", "wed", "Downer", "cherry", "BANANA");
+    strStream.sorted().forEach(str -> System.out.print(str+" "));
+    // 출력 : BANANA Downer Google Z apple cherry wed 
+    ```
+
+  - `Stream<T> sorted(Comparator<T> comparator)` : 특정 정렬 기준에 따라 정렬
+
+    ```java
+    Stream<String> strStream = Stream.of("Z", "apple", "Google", "wed", "Downer", "cherry", "BANANA");   strStream.sorted(Comparator.comparing(String::length)).forEach(str -> System.out.print(str+" "));  // 길이 순 정렬  
+    // 출력 : Z wed apple Google Downer cherry BANANA 
+    ```
+
+- `Stream<T> map` : Stream 요소를 변환
+
+- `Stream<T> flatMap` : Stream 요소를 변환
 
 ---
 
@@ -106,16 +165,16 @@
 - Stream 최종  연산은 중간 연산과 다르게 1번만 수행이 가능하며 최종 연산 수행이 Stream이  닫힌다.
   - 예) `stream.distinct().limit(5).sorted().forEach(System.out::println)`
   - `.forEach(System.out::println)` : 최종 연산
-- void forEach(Consumer<? super T> action) : 각 요소에 지정된 작업 수행
-  - void forEachOrdered(Consumer<? super T> action) : 각 요소에 지정된 작업을  순서를 유지하며 수행
-- long count() : 요소의 개수 반환
-- Optional<T>  max/min(Comparator<<? super T> comparator) : 정렬 기준에 따라  최대값 / 최솟값 반환
-- Optional<T> findAny() : Stream 요소 아무거나 **하나**를 반환(병렬) (filter와 같이 쓰임.)
-  - Optional<T> findFirst() : Stream 요소 첫번째 **하나**를 반환(직렬)
-- boolean *Match(Prdicate<T> p) : 주어진 조건을 만족하는지 여부 반환
-  - boolean allMatch(Prdicate<T> p) : 모두 만족하는지
-  - boolean anyMatch(Prdicate<T> p) : 하나라도 만족하는지
-  - boolean noneMatch(Prdicate<T> p) : 모두 만족하지 않는지 
-- Object[] toArray() : Stream의 요소를 객체 배열로 반환
-- Optional<T> reduce(BinaryOperator<t> accumulator) : Stream의 요소를 줄여가면서 계산
-- R collect(Collector<T,A,R> collector) : reduce를 이용하여 Group 작업을 수행
+- `void forEach(Consumer<? super T> action)` : 각 요소에 지정된 작업 수행
+  - `void forEachOrdered(Consumer<? super T> action)` : 각 요소에 지정된 작업을  순서를 유지하며 수행
+- `long count()` : 요소의 개수 반환
+- `Optional<T>  max/min(Comparator<<? super T> comparator)` : 정렬 기준에 따라  최대값 / 최솟값 반환
+- `Optional<T> findAny()` : Stream 요소 아무거나 **하나**를 반환(병렬) (filter와 같이 쓰임.)
+  - `Optional<T> findFirst()` : Stream 요소 첫번째 **하나**를 반환(직렬)
+- `boolean *Match(Prdicate<T> p)` : 주어진 조건을 만족하는지 여부 반환
+  - `boolean allMatch(Prdicate<T> p)` : 모두 만족하는지
+  - `boolean anyMatch(Prdicate<T> p)` : 하나라도 만족하는지
+  - `boolean noneMatch(Prdicate<T> p)` : 모두 만족하지 않는지 
+- `Object[] toArray()` : Stream의 요소를 객체 배열로 반환
+- `Optional<T> reduce(BinaryOperator<t> accumulator)` : Stream의 요소를 줄여가면서 계산
+- `R collect(Collector<T,A,R> collector)` : reduce를 이용하여 Group 작업을 수행
