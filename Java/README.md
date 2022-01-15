@@ -12,9 +12,15 @@
 
 ### 4. [지하철 노선도 미션](https://github.com/HyeonbinSa/subway-map)
 
-### 4. [페어 매칭 프로그램(최종 테스트)](https://github.com/HyeonbinSa/java-pairmatching-precourse/tree/ben)
+### 5. [페어 매칭 프로그램(최종 테스트)](https://github.com/HyeonbinSa/java-pairmatching-precourse/tree/ben)
 
 ---
 
-## [💻 Java 학습 내용](https://github.com/HyeonbinSa/study-roadmap/tree/master/Java/JavaBasic)
+## 💻 Java 학습 내용
+
+### 1. [Java 학습 코드](https://github.com/HyeonbinSa/java-study)
+
+### 2. [Java 학습 내용 정리](https://github.com/HyeonbinSa/study-roadmap/tree/master/Java/JavaBasic)
+
+
 
