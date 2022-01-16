@@ -210,19 +210,110 @@
 
 ### 3. Stream 최종  연산
 
-- Stream 최종  연산은 중간 연산과 다르게 1번만 수행이 가능하며 최종 연산 수행이 Stream이  닫힌다.
+- Stream 최종  연산은 중간 연산과 다르게 <u>**1번만 수행**</u>이 가능하며 최종 연산 수행 후 Stream이 닫힌다.
+
   - 예) `stream.distinct().limit(5).sorted().forEach(System.out::println)`
   - `.forEach(System.out::println)` : 최종 연산
+
 - `void forEach(Consumer<? super T> action)` : 각 요소에 지정된 작업 수행
-  - `void forEachOrdered(Consumer<? super T> action)` : 각 요소에 지정된 작업을  순서를 유지하며 수행
+
+  - `void forEachOrdered(Consumer<? super T> action)` : 각 요소에 지정된 작업을  순서를 유지하며 수행 (병렬  스트림에서)
+
+    ```java
+    System.out.print("병렬 Stream forEach : ");
+    IntStream.rangeClosed(1,9).parallel().forEach(number -> System.out.print(number +" "));
+    System.out.println();
+    System.out.print("병렬 Stream forEachOrdered : ");
+    IntStream.rangeClosed(1,9).parallel().forEachOrdered(number -> System.out.print(number +" "));
+    // 병렬 Stream forEach : 8 2 9 3 7 4 5 1 6         (순서 보장하지 않음.)
+    // 병렬 Stream forEachOrdered : 1 2 3 4 5 6 7 8 9  (순서 보장함.)
+    ```
+
 - `long count()` : 요소의 개수 반환
+
 - `Optional<T>  max/min(Comparator<<? super T> comparator)` : 정렬 기준에 따라  최대값 / 최솟값 반환
+
 - `Optional<T> findAny()` : Stream 요소 아무거나 **하나**를 반환(병렬) (filter와 같이 쓰임.)
-  - `Optional<T> findFirst()` : Stream 요소 첫번째 **하나**를 반환(직렬)
-- `boolean *Match(Prdicate<T> p)` : 주어진 조건을 만족하는지 여부 반환
-  - `boolean allMatch(Prdicate<T> p)` : 모두 만족하는지
-  - `boolean anyMatch(Prdicate<T> p)` : 하나라도 만족하는지
-  - `boolean noneMatch(Prdicate<T> p)` : 모두 만족하지 않는지 
+
+  - 결과가 <u>null</u>일 수 있기때문에 Optional<T>를 반환한다.
+
+  - 병렬 Stream에서 스레드가 조건에 부합하는 값을 발견했을 때 반환
+
+    ```java
+    IntStream intStream2 = IntStream.rangeClosed(1, 9);
+    OptionalInt optionalInt2 = intStream2.parallel().filter(number -> number >= 3).findAny();
+    System.out.println("findAny() : " + optionalInt2.getAsInt());
+    // 출력 : findAny() : 6 (병렬 스트림에서 사용)
+    ```
+
+  - `Optional<T> findFirst()` : Stream 요소 첫번째 **하나**를 반환 (직렬)
+
+    ```java
+    IntStream intStream = IntStream.rangeClosed(1, 9);
+    OptionalInt optionalInt = intStream.filter(number -> number >= 3).findFirst();
+    System.out.println("findFirst() : " + optionalInt.getAsInt());
+    // 출력 : findFirst() : 3
+    ```
+
+- `boolean *Match(Predicate<T> p)` : 주어진 **조건**을 만족하는지 여부 반환
+
+  - `boolean allMatch(Predicate<T> p)` : 모두 만족하는지
+
+    ```java
+    IntStream intStream = IntStream.rangeClosed(1, 9);
+    boolean result = intStream.allMatch(number -> number > 8);
+    System.out.println("allMatch : " + result);
+    // 출력 : allMatch : false
+    ```
+
+  - `boolean anyMatch(Preedicate<T> p)` : 하나라도 만족하는지
+
+    ```java
+    IntStream intStream = IntStream.rangeClosed(1, 9);
+    boolean result = intStream.anyMatch(number -> number > 8);
+    System.out.println("anyMatch : " + result);
+    // 출력 : anyMatch : true
+    ```
+
+  - `boolean noneMatch(Predicate<T> p)` : 모두 만족하지 않는지 
+
+    ```java
+    IntStream intStream = IntStream.rangeClosed(1, 9);
+    boolean result = intStream.noneMatch(number -> number > 8);
+    System.out.println("anyMatch : " + result);
+    // 출력 : noneMatch : false
+    ```
+
 - `Object[] toArray()` : Stream의 요소를 객체 배열로 반환
-- `Optional<T> reduce(BinaryOperator<t> accumulator)` : Stream의 요소를 줄여가면서 계산
+
+- `Optional<T> reduce(BinaryOperator<t> accumulator)` : Stream의 요소를 줄여가면서 계산(누적연산, accumulator)
+
+  ```java
+  String[] stringArray = {"Java", "Python", "C++", "C", "Kotlin", "Javascript"};
+  // Case 1. 초기값 있을 경우
+  Stream<String> stringStream1 = Stream.of(stringArray);
+  IntStream stringLengthStream1 = stringStream1.mapToInt(String::length);
+  int sum = stringLengthStream1.reduce(0, (a, b) -> a + b);
+  System.out.println("문자열 길이의 합 : " + sum);
+  // 출력 : 문자열 길이의 합 : 30
+  // Case 2. 초기값 없을 경우
+  Stream<String> stringStream2 = Stream.of(stringArray);
+  IntStream stringLengthStream2 = stringStream2.mapToInt(String::length);
+  OptionalInt max = stringLengthStream2.reduce(Integer::max);
+  System.out.println("최대 길이 : " + max.getAsInt());
+  // 출력 : 최대 길이 : 10
+  ```
+
+  - `accumulator` : 이전 연산 결과와 스트림의 요소에 수행할 연산을 의미한다.
+
+  ```java
+  // stream.reduce(초기값, 연산)
+  stringLengthStream1.reduce(0, (a, b) -> a + b);
+  // 연산의 수행 
+  int a = 0;(초기값) 
+  for(int b : stream){
+  		a = a+b;
+  }
+  ```
+
 - `R collect(Collector<T,A,R> collector)` : reduce를 이용하여 Group 작업을 수행
