@@ -317,3 +317,9 @@
   ```
 
 - `R collect(Collector<T,A,R> collector)` : reduce를 이용하여 Group 작업을 수행
+
+  - Collector를 매개변수로 받으며  **Collector는 Interface**다.
+    - Collector<T, A, R>  : T(요소)를  A에 누적하여 R로 변환해서 반환
+    - Collector Interface가 구현된 `Collectors Class`를 아용
+  - `reduce()`와의 차이점은 그룹별로 Reducing을 한다.(`reduce()`는 전체가  대상)
+
