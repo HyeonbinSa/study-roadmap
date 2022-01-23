@@ -30,7 +30,9 @@
 - [ ] JVM의 역할과 기능
 - [ ] Java Compile 과정
 - [ ] String과 StringBuffer의 차이
-- [ ] Java 메모리 영역
+- [x] [Java 메모리 영역](https://github.com/HyeonbinSa/study-roadmap/tree/master/Java/JavaBasic/Java메모리구조.md)
+  - [ ] 실제 코드가 어떻게 메모리에 적용되는지 테스트 추가 필요
+  - [ ] Method Area에 저장되는 정보에 대한 학습
 - [ ] 오버로딩, 오버라이딩
 - [ ] 추상 클래스와 인터페이스
 - [ ] Generic
