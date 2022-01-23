@@ -14,7 +14,7 @@
 
 ## 📕 Computer Science
 
-### 1. OS
+### 1. [OS](https://github.com/HyeonbinSa/study-roadmap/tree/master/OS)
 
 ### 2. [Network](https://github.com/HyeonbinSa/study-roadmap/tree/master/Network)
 
@@ -28,7 +28,7 @@
 
 ## 🎯 알고리즘 & 코딩 테스트
 
-### 1. Data Structure
+### 1. [Data Structure](https://github.com/HyeonbinSa/java-study/tree/master/src/datastructure)
 
 ### 2. [Algorithm](https://github.com/HyeonbinSa/study-roadmap/tree/master/Algorithm)
 
