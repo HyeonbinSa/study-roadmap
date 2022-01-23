@@ -22,5 +22,30 @@
 
 ### 2. [Java 학습 내용 정리](https://github.com/HyeonbinSa/study-roadmap/tree/master/Java/JavaBasic)
 
+---
 
+## 📋 학습 목록
 
+- [ ] 가비지 컬렉션
+- [ ] JVM의 역할과 기능
+- [ ] Java Compile 과정
+- [ ] String과 StringBuffer의 차이
+- [ ] Java 메모리 영역
+- [ ] 오버로딩, 오버라이딩
+- [ ] 추상 클래스와 인터페이스
+- [ ] Generic
+- [ ] 접근 지정자 
+- [ ] Call By Value와 Call By Referece
+- [ ] 디자인 패턴
+- [ ] Servlet과 JSP
+- [ ] Wrapper Class
+- [ ] 동기식과 비동기식
+- [ ] equals() 메서드와 == 연산자
+- [ ] Thread 구현
+- [ ] Serialization
+- [x] [Array와 LinkedList의 차이](https://github.com/HyeonbinSa/study-roadmap/blob/master/Java/JavaBasic/List%EC%99%80LinkedList.md)
+- [ ] [Java Stream](https://github.com/HyeonbinSa/study-roadmap/blob/master/Java/JavaBasic/Stream.md)
+  - [ ] collect()에 대한 추가 학습
+- [x] [Java Optional](https://github.com/HyeonbinSa/study-roadmap/blob/master/Java/JavaBasic/Optional.md)
+- [x] [Java Lambda](https://github.com/HyeonbinSa/study-roadmap/blob/master/Java/JavaBasic/Lambda.md)
+- [ ] ...
