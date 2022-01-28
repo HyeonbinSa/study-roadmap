@@ -6,4 +6,8 @@
 
 ###  1. 인프런) [스프링 핵심 원리  - 기본편](https://github.com/HyeonbinSa/SpringStudy_Inflean)
 
-### 
+### 📋 학습 목록
+- [x] @RestController
+- [ ] @ResponseBody
+- [ ] Http Message Converter
+- [ ] ...
