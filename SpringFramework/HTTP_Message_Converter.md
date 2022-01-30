@@ -66,3 +66,7 @@
   1. ArgumentResolver의 `supportsParameter()`를 호출하여 해당하는 Parameter를 지원하는지 확인
   2. `resolveArgument()`를 호출하여 객체를 생성
   3. Controller 호출 시 2번에서 생성한 객체를 반환
+
+### ReturnValueHandler
+- `HandlerMethodReturnValueHndler`이며 <u></u>**응답**</u> 값을 변환하고 처리한다.
+- `@ResponseBody`와 `HttpEntity`를 처리하고 HTTP Message  Converter를 호출하여 응답 결과를 만든다.

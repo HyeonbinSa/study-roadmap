@@ -50,4 +50,7 @@
   - [ ] collect()에 대한 추가 학습
 - [x] [Java Optional](https://github.com/HyeonbinSa/study-roadmap/blob/master/Java/JavaBasic/Optional.md)
 - [x] [Java Lambda](https://github.com/HyeonbinSa/study-roadmap/blob/master/Java/JavaBasic/Lambda.md)
+- [ ] 스레드 환경에서의 사용(동시성 관련)
+  - [ ] AutomicLong
+  - [ ] ConcurrentHashMap
 - [ ] ...
