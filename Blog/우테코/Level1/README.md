@@ -1,0 +1,11 @@
+# Level 1 - 블로그 To Do List
+- [ ] Integer 캐싱
+- [ ] 가변 객체와 불변 객체
+- [ ] 생성자 체이닝
+- [ ] POSIX New Line
+- [ ] @ParameterizedTest
+- [ ] 정적 팩토리 메서드
+- [ ] VO
+- [ ] MVC 패턴
+- [ ] Date vs. LocalDateTime
+- [ ] EnumMap
